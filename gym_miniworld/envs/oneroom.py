@@ -11,9 +11,10 @@ class OneRoom(MiniWorldEnv):
     placed randomly in one big room.
     """
 
-    def __init__(self, size=10, max_episode_steps=180, **kwargs):
+    def __init__(self, size=10, max_episode_steps=180, chg_box_color=False, **kwargs):
         assert size >= 2
         self.size = size
+        self.chg_box_color = chg_box_color
 
         super().__init__(
             max_episode_steps=max_episode_steps,
@@ -31,7 +32,15 @@ class OneRoom(MiniWorldEnv):
             max_z=self.size
         )
 
-        self.box = self.place_entity(Box(color='red'))
+        if self.chg_box_color:
+            color = self.rand.color()
+            box = Box(color=color)
+            box.randomize(self.params, self.rand)
+        else:
+            color = 'red'
+            box = Box(color=color)
+
+        self.box = self.place_entity(box)
         self.place_agent()
 
     def step(self, action):

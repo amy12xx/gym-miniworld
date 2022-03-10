@@ -12,9 +12,11 @@ class TMaze(MiniWorldEnv):
     def __init__(
         self,
         goal_pos=None,
+        chg_box_color=False,
         **kwargs
     ):
         self.goal_pos = goal_pos
+        self.chg_box_color = chg_box_color
 
         super().__init__(
             max_episode_steps=280,
@@ -36,7 +38,16 @@ class TMaze(MiniWorldEnv):
         self.connect_rooms(room1, room2, min_z=-2, max_z=2)
 
         # Add a box at a random end of the hallway
-        self.box = Box(color='red')
+        # self.box = Box(color='red')
+        # Add a box at a random end of the hallway
+        if self.chg_box_color:
+            color = self.rand.color()
+            box = Box(color=color)
+            box.randomize(self.params, self.rand)
+        else:
+            color = 'red'
+            box = Box(color=color)
+        self.box = box
 
         # Place the goal in the left or the right arm
         if self.goal_pos != None:
@@ -71,9 +82,9 @@ class TMaze(MiniWorldEnv):
         return obs, reward, done, info
 
 class TMazeLeft(TMaze):
-    def __init__(self):
-        super().__init__(goal_pos=[10, 0, -6])
+    def __init__(self, chg_box_color=False, **kwargs):
+        super().__init__(goal_pos=[10, 0, -6], chg_box_color=chg_box_color, **kwargs)
 
 class TMazeRight(TMaze):
-    def __init__(self):
-        super().__init__(goal_pos=[10, 0, 6])
+    def __init__(self, chg_box_color=False, **kwargs):
+        super().__init__(goal_pos=[10, 0, 6], chg_box_color=chg_box_color, **kwargs)

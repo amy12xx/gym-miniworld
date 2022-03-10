@@ -13,9 +13,11 @@ class YMaze(MiniWorldEnv):
     def __init__(
         self,
         goal_pos=None,
+        chg_box_color=False,
         **kwargs
     ):
         self.goal_pos = goal_pos
+        self.chg_box_color = chg_box_color
 
         super().__init__(
             max_episode_steps=280,
@@ -59,7 +61,15 @@ class YMaze(MiniWorldEnv):
         self.connect_rooms(right_arm, hub_room, min_z=0, max_z=1.995)
 
         # Add a box at a random end of the hallway
-        self.box = Box(color='red')
+        # Add a box at a random end of the hallway
+        if self.chg_box_color:
+            color = self.rand.color()
+            box = Box(color=color)
+            box.randomize(self.params, self.rand)
+        else:
+            color = 'red'
+            box = Box(color=color)
+        self.box = box
 
         # Place the goal in the left or the right arm
         if self.goal_pos != None:
@@ -94,9 +104,9 @@ class YMaze(MiniWorldEnv):
         return obs, reward, done, info
 
 class YMazeLeft(YMaze):
-    def __init__(self):
-        super().__init__(goal_pos=[3.9, 0, -7.0])
+    def __init__(self, chg_box_color=False, **kwargs):
+        super().__init__(goal_pos=[3.9, 0, -7.0], chg_box_color=chg_box_color, **kwargs)
 
 class YMazeRight(YMaze):
-    def __init__(self):
-        super().__init__(goal_pos=[3.9, 0, 7.0])
+    def __init__(self, chg_box_color=False, **kwargs):
+        super().__init__(goal_pos=[3.9, 0, 7.0], chg_box_color=chg_box_color, **kwargs)

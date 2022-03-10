@@ -10,10 +10,13 @@ class PickupObjs(MiniWorldEnv):
     each object. Objects disappear when picked up.
     """
 
-    def __init__(self, size=12, num_objs=5, **kwargs):
+    def __init__(self, size=12, num_objs=5, chg_box_color=False,
+                 chg_entity=False, **kwargs):
         assert size >= 2
         self.size = size
         self.num_objs = num_objs
+        self.chg_box_color = chg_box_color
+        self.chg_entity = chg_entity
 
         super().__init__(
             max_episode_steps=400,
@@ -35,10 +38,14 @@ class PickupObjs(MiniWorldEnv):
         )
 
         obj_types = [Ball, Box, Key]
+        color = 'red'
+        obj_type = Box
 
         for obj in range(self.num_objs):
-            obj_type = self.rand.choice(obj_types)
-            color = self.rand.color()
+            if self.chg_entity:
+                obj_type = self.rand.choice(obj_types)
+            if self.chg_box_color:
+                color = self.rand.color()
 
             if obj_type == Box:
                 self.place_entity(Box(color=color, size=0.9))

@@ -10,9 +10,10 @@ class Hallway(MiniWorldEnv):
     at the end of a hallway
     """
 
-    def __init__(self, length=12, **kwargs):
+    def __init__(self, length=12, chg_box_color=False, **kwargs):
         assert length >= 2
         self.length = length
+        self.chg_box_color = chg_box_color
 
         super().__init__(
             max_episode_steps=250,
@@ -30,8 +31,16 @@ class Hallway(MiniWorldEnv):
         )
 
         # Place the box at the end of the hallway
+        if self.chg_box_color:
+            color = self.rand.color()
+            box = Box(color=color)
+            box.randomize(self.params, self.rand)
+        else:
+            color = 'red'
+            box = Box(color=color)
+
         self.box = self.place_entity(
-            Box(color='red'),
+            box,
             min_x=room.max_x - 2
         )
 
