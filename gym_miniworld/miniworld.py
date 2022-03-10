@@ -882,6 +882,8 @@ class MiniWorldEnv(gym.Env):
             hx = r.max_x if max_x == None else max_x
             lz = r.min_z if min_z == None else min_z
             hz = r.max_z if max_z == None else max_z
+            print(lx + ent.radius, 0, lz + ent.radius)
+            print(hx - ent.radius, 0, hz - ent.radius)
             pos = self.rand.float(
                 low =[lx + ent.radius, 0, lz + ent.radius],
                 high=[hx - ent.radius, 0, hz - ent.radius]
