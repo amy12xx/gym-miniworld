@@ -1,5 +1,16 @@
 # MiniWorld (gym-miniworld)
 
+## Updates made to this repo
+- The OneRoom, Hallway, TMaze, TMazeLeft, TMazeRight, YMaze, YMazeLeft, YMazeRight environments have an additional "chg_box_color" parameter to randomize the color of the goal entity (Box) during training.
+- PickupObjs has additional "chg_entity_color" parameter to randomize objects of goals.
+- Additional concrete texture images have been added from the free stock photos website https://www.pexels.com/ : concrete_5.png through concrete_10.png.
+  - concrete_5.png: Artist: Italo Melo
+  - concrete_6.png: Artist: Milo Textures
+  - concrete_7.png: Artist: Scott Webb
+  - concrete_8.png: Artist: Suzy Hazelwood
+  - concrete_9.png: Artist: Milo Textures
+  - concrete_10.png: Artist: Skylar Kang
+
 [![Build Status](https://travis-ci.org/maximecb/gym-miniworld.svg?branch=master)](https://travis-ci.org/maximecb/gym-miniworld)
 
 Contents:
