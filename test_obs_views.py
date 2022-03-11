@@ -273,18 +273,18 @@ for i in range(3):
     plt.title("single gym env obs")
     plt.savefig(path + "obs1_{}.png".format(str(i)))
 
-# print("Testing vectorized gym env observations...")
-# envs = make_vec_envs(env_name, seed, 1,
-#                      0.99, "/tmp/gym/", False, device, allow_early_resets=False,
-#                      chg_box_color=False, chg_entity=False, top_view=False)
-# obs = envs.reset()
-# print("env shape: ", envs.observation_space.shape)
-# print("obs shape: ", obs.shape)
-# obs = obs[0].permute(2, 1, 0).int().cpu().numpy()
-# obs4 = obs[:, :, 9:]
-# plt.imshow(obs4)
-# plt.title("vec gym env obs 4")
-# plt.savefig(path + "obs2_4.png")
+print("Testing vectorized gym env observations...")
+envs = make_vec_envs(env_name, seed, 1,
+                     0.99, "/tmp/gym/", False, device, allow_early_resets=False,
+                     chg_box_color=False, chg_entity=False, top_view=False)
+obs = envs.reset()
+print("env shape: ", envs.observation_space.shape)
+print("obs shape: ", obs.shape)
+obs = obs[0].permute(2, 1, 0).int().cpu().numpy()
+obs4 = obs[:, :, 9:]
+plt.imshow(obs4)
+plt.title("vec gym env obs 4")
+plt.savefig(path + "obs2_4.png")
 
 # print("Testing vectorized gym env observations in top view...")
 # envs = make_vec_envs(env_name, seed, 1,
