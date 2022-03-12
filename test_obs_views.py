@@ -267,8 +267,7 @@ env = gym.make(env_name, chg_box_color=True)
 env.seed(seed)
 for i in range(3):
     obs = env.reset()
-    print("env obs space shape: ", env.observation_space.shape)
-    print("reset obs shape: ", obs.shape)
+    print("env shape: ", env.observation_space.shape)
     plt.imshow(obs)
     plt.title("single gym env obs")
     plt.savefig(path + "obs1_{}.png".format(str(i)))
@@ -286,55 +285,55 @@ plt.imshow(obs4)
 plt.title("vec gym env obs 4")
 plt.savefig(path + "obs2_4.png")
 
-# print("Testing vectorized gym env observations in top view...")
-# envs = make_vec_envs(env_name, seed, 1,
-#                      0.99, "/tmp/gym/", False, device, allow_early_resets=False,
-#                      chg_box_color=False, chg_entity=False, top_view=True)
-# obs = envs.reset()
-# print("env shape: ", envs.observation_space.shape)
-# print("obs shape: ", obs.shape)
-# obs = obs[0].permute(2, 1, 0).int().cpu().numpy()
-# obs4 = obs[:, :, 9:]
-# plt.imshow(obs4)
-# plt.title("vec gym env obs 4 top view")
-# plt.savefig(path + "obs3_4.png")
+print("Testing vectorized gym env observations in top view...")
+envs = make_vec_envs(env_name, seed, 1,
+                     0.99, "/tmp/gym/", False, device, allow_early_resets=False,
+                     chg_box_color=False, chg_entity=False, top_view=True)
+obs = envs.reset()
+print("env shape: ", envs.observation_space.shape)
+print("obs shape: ", obs.shape)
+obs = obs[0].permute(2, 1, 0).int().cpu().numpy()
+obs4 = obs[:, :, 9:]
+plt.imshow(obs4)
+plt.title("vec gym env obs 4 top view")
+plt.savefig(path + "obs3_4.png")
 
-# print("Testing SB3 env observations...")
-# envs = make_vec_env(
-#             env_name,
-#             n_envs=1,
-#             seed=seed,
-#             wrapper_class=None,
-#             vec_env_cls=dummy,
-#             env_kwargs=None,
-#         )
-# envs = VecFrameStack(envs, n_stack=4)
-# envs = VecTransposeImage(envs)
-# obs = envs.reset()
-# print("env shape: ", envs.observation_space.shape)
-# print("obs shape: ", obs.shape)
-# obs = torch.LongTensor(obs[0]).permute(2, 1, 0).int().cpu().numpy()
-# obs4 = obs[:, :, 9:]
-# plt.imshow(obs4)
-# plt.title("sb3 vec gym env obs 4")
-# plt.savefig(path + "obs4_4.png")
+print("Testing SB3 env observations...")
+envs = make_vec_env(
+            env_name,
+            n_envs=1,
+            seed=seed,
+            wrapper_class=None,
+            vec_env_cls=dummy,
+            env_kwargs=None,
+        )
+envs = VecFrameStack(envs, n_stack=4)
+envs = VecTransposeImage(envs)
+obs = envs.reset()
+print("env shape: ", envs.observation_space.shape)
+print("obs shape: ", obs.shape)
+obs = torch.LongTensor(obs[0]).permute(2, 1, 0).int().cpu().numpy()
+obs4 = obs[:, :, 9:]
+plt.imshow(obs4)
+plt.title("sb3 vec gym env obs 4")
+plt.savefig(path + "obs4_4.png")
 
-# print("Testing SB3 env observations top view...")
-# envs = make_vec_env(
-#             env_name,
-#             n_envs=1,
-#             seed=seed,
-#             wrapper_class=None,
-#             vec_env_cls=dummy,
-#             env_kwargs={"top_view": True},
-#         )
-# envs = VecFrameStack(envs, n_stack=4)
-# envs = VecTransposeImage(envs)
-# obs = envs.reset()
-# print("env shape: ", envs.observation_space.shape)
-# print("obs shape: ", obs.shape)
-# obs = torch.LongTensor(obs[0]).permute(2, 1, 0).int().cpu().numpy()
-# obs4 = obs[:, :, 9:]
-# plt.imshow(obs4)
-# plt.title("sb3 vec gym env obs 4 top view")
-# plt.savefig(path + "obs5_4.png")
+print("Testing SB3 env observations top view...")
+envs = make_vec_env(
+            env_name,
+            n_envs=1,
+            seed=seed,
+            wrapper_class=None,
+            vec_env_cls=dummy,
+            env_kwargs={"top_view": True},
+        )
+envs = VecFrameStack(envs, n_stack=4)
+envs = VecTransposeImage(envs)
+obs = envs.reset()
+print("env shape: ", envs.observation_space.shape)
+print("obs shape: ", obs.shape)
+obs = torch.LongTensor(obs[0]).permute(2, 1, 0).int().cpu().numpy()
+obs4 = obs[:, :, 9:]
+plt.imshow(obs4)
+plt.title("sb3 vec gym env obs 4 top view")
+plt.savefig(path + "obs5_4.png")

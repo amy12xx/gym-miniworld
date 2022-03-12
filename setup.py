@@ -7,7 +7,7 @@ setup(
     packages=['gym_miniworld', 'gym_miniworld.envs'],
     install_requires=[
         'gym>=0.9.0',
-        'numpy>=1.10.0,<1.21',
+        'numpy>=1.10.0',
         'pyglet>=1.5.11',
     ],
     # Include textures and meshes in the package

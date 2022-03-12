@@ -461,7 +461,9 @@ class MiniWorldEnv(gym.Env):
         window_width=800,
         window_height=600,
         params=DEFAULT_PARAMS,
-        domain_rand=False
+        domain_rand=False,
+        top_view=False,
+        chg_tex=False,
     ):
         # Action enumeration for this environment
         self.actions = MiniWorldEnv.Actions
@@ -517,6 +519,8 @@ class MiniWorldEnv(gym.Env):
             x = window_width + 5,
             y = window_height - (self.obs_disp_height + 19)
         )
+        self.top_view = top_view
+        self.chg_tex = chg_tex
 
         # Initialize the state
         self.seed()
@@ -586,7 +590,10 @@ class MiniWorldEnv(gym.Env):
         self._render_static()
 
         # Generate the first camera image
-        obs = self.render_obs()
+        if self.top_view:
+            obs = self.render_top_view()
+        else:
+            obs = self.render_obs()
 
         # Return first observation
         return obs
@@ -702,7 +709,10 @@ class MiniWorldEnv(gym.Env):
             self.agent.carrying.dir = self.agent.dir
 
         # Generate the current camera image
-        obs = self.render_obs()
+        if self.top_view:
+            obs = self.render_top_view()
+        else:
+            obs = self.render_obs()
 
         # If the maximum time step count is reached
         if self.step_count >= self.max_episode_steps:
@@ -987,7 +997,7 @@ class MiniWorldEnv(gym.Env):
         for room in self.rooms:
             room._gen_static_data(
                 self.params,
-                self.rand if self.domain_rand else None
+                self.rand if self.domain_rand or self.chg_tex else None
             )
 
         # Concatenate the wall segments

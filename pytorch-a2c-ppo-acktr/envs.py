@@ -30,9 +30,18 @@ except ImportError:
     pass
 
 
-def make_env(env_id, seed, rank, log_dir, add_timestep, allow_early_resets):
+def make_env(env_id, seed, rank, log_dir, add_timestep, allow_early_resets,
+             chg_box_color=False, chg_entity=False, top_view=False):
     def _thunk():
-        env = gym.make(env_id)
+        # chg_box_color and chg_entity are not common to all environments
+        if chg_box_color and chg_entity:
+            env = gym.make(env_id, chg_box_color=chg_box_color, chg_entity=chg_entity, top_view=top_view)
+        elif chg_entity:
+            env = gym.make(env_id, chg_entity=chg_entity, top_view=top_view)
+        elif chg_box_color:
+            env = gym.make(env_id, chg_box_color=chg_box_color, top_view=top_view)
+        else:
+            env = gym.make(env_id, top_view=top_view)
         env.seed(seed + rank)
 
         obs_shape = env.observation_space.shape
@@ -54,8 +63,10 @@ def make_env(env_id, seed, rank, log_dir, add_timestep, allow_early_resets):
 
     return _thunk
 
-def make_vec_envs(env_name, seed, num_processes, gamma, log_dir, add_timestep, device, allow_early_resets):
-    envs = [make_env(env_name, seed, i, log_dir, add_timestep, allow_early_resets) for i in range(num_processes)]
+def make_vec_envs(env_name, seed, num_processes, gamma, log_dir, add_timestep, device, allow_early_resets,
+                  chg_box_color=False, chg_entity=False, top_view=False):
+    envs = [make_env(env_name, seed, i, log_dir, add_timestep,
+                     allow_early_resets, chg_box_color, chg_entity, top_view) for i in range(num_processes)]
 
     if len(envs) > 1:
         envs = SubprocVecEnv(envs)

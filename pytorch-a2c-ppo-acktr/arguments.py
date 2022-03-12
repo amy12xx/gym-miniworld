@@ -63,6 +63,12 @@ def get_args():
                         help='enable visdom visualization')
     parser.add_argument('--port', type=int, default=8097,
                         help='port to run the server on (default: 8097)')
+    parser.add_argument('--chg-box-color', action="store_true", default=False,
+                        help='Change box color of objects during training.')
+    parser.add_argument('--chg-entity', action="store_true", default=False,
+                        help='Change object during training.')
+    parser.add_argument('--top-view', action="store_true", default=False,
+                        help='Render top view of observations during training.')
     args = parser.parse_args()
 
     args.cuda = not args.no_cuda and torch.cuda.is_available()

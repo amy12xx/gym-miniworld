@@ -59,9 +59,9 @@ def main():
         viz = Visdom(port=args.port)
         win = None
     """
-
     envs = make_vec_envs(args.env_name, args.seed, args.num_processes,
-                        args.gamma, args.log_dir, args.add_timestep, device, False)
+                        args.gamma, args.log_dir, args.add_timestep, device, allow_early_resets=False,
+                        chg_box_color=args.chg_box_color, chg_entity=args.chg_entity, top_view=args.top_view)
 
     actor_critic = Policy(envs.observation_space.shape, envs.action_space,
         base_kwargs={'recurrent': args.recurrent_policy})
@@ -170,7 +170,8 @@ def main():
 
         if args.eval_interval is not None and len(episode_rewards) > 1 and j % args.eval_interval == 0:
             eval_envs = make_vec_envs(args.env_name, args.seed + args.num_processes, args.num_processes,
-                                args.gamma, eval_log_dir, args.add_timestep, device, True)
+                                args.gamma, eval_log_dir, args.add_timestep, device, True,
+                                args.chg_box_color, args.chg_entity, args.top_view)
 
             if eval_envs.venv.__class__.__name__ == "VecNormalize":
                 eval_envs.venv.ob_rms = envs.venv.ob_rms

@@ -9,6 +9,7 @@ from gym_miniworld.wrappers import PyTorchObsWrapper, GreyscaleWrapper
 from gym_miniworld.entity import TextFrame
 
 env = gym.make('MiniWorld-Hallway-v0')
+obs = env.reset()
 
 # Try stepping a few times
 for i in range(0, 10):
